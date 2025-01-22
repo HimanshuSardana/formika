@@ -1,0 +1,112 @@
+"use client"
+import { Button } from "@/components/ui/button";
+import LoginSchema from '@/schemas/LoginSchema'
+import Link from "next/link";
+import { ThemeToggleButton } from "@/components/theme-toggle";
+import { Lightbulb, Library, BicepsFlexed, Blocks } from "lucide-react";
+
+export default function Home() {
+        return (
+                <>
+                        <Navbar />
+                        <Hero />
+                        <Features />
+                </>
+        );
+}
+
+export function Navbar() {
+        return (
+                <div className=" h-32 flex items-center justify-between mx-[10%]">
+                        {/* BRAND */}
+                        <h3 className="font-extrabold text-xl"><span className="text-primary">Form</span>ika</h3>
+
+                        {/* LINKS */}
+                        <div className="flex gap-3">
+                                <Button asChild className="font-bold">
+                                        <Link href="/register">Get Started</Link>
+                                </Button>
+                                <Button variant={"secondary"} className="bg-inherit text-primary font-bold" asChild>
+                                        <Link href="/login">Log In</Link>
+                                </Button>
+                        </div>
+                </div >
+        );
+}
+
+export function Hero() {
+        return (
+                <div className="h-[calc(90vh-128px)] flex md:flex-row sm:flex-col items-center  mx-[10%] flex gap-5">
+                        {/* LEFT */}
+                        <div className="left flex md:items-start sm:items-center sm:text-center md:text-left flex-col space-y-3">
+                                <Chip />
+
+                                <h3 className="text-5xl font-extrabold">Improve your <span className="text-primary">chess</span></h3>
+                                <p className="font-bold text-muted-foreground sm:w-full md:w-2/3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse quibusdam facere ut ratione cum autem qui sunt laboriosam vel. Dolores?</p>
+
+                                <div className="buttons flex gap-5">
+                                        <Button className="font-bold">Get Started</Button>
+                                        <Button variant={"secondary"} className="bg-inherit text-primary font-bold">Learn More</Button>
+                                </div>
+                        </div>
+                </div>
+        )
+}
+
+export function Chip() {
+        return (
+                <span className="bg-primary/20  rounded-full text-base text-xs font-bold px-4 text-primary w-fit p-2">Beta version out now!</span>
+        )
+}
+
+export function Features() {
+        return (
+                <div className="mx-[10%] flex flex-col py-16">
+                        <div className="flex justify-between flex-col gap-2">
+                                <h3 className="xs:text-left md:text-center font-black text-primary text-lg">Improve faster</h3>
+                                <h3 className="font-black text-5xl xs:text-left md:text-center">A full-fledged chess analysis tool</h3>
+                                <div className="md:w-1/2 md:mx-auto mt-2">
+                                        <p className="xs:text-left md:text-center text-muted-foreground ">
+                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit libero soluta, placeat consequuntur nam neque hic rem omnis. Earum odit ex rerum reprehenderit dolor nulla.
+                                        </p>
+
+                                </div>
+                        </div>
+
+                        {/* FEATURE CARDS */}
+                        <div className="feature-cards flex flex-col justify-around md:mx-auto md:w-2/3 gap-10 mt-10">
+                                <div className="row flex xs:flex-col md:flex-row justify-between gap-10">
+                                        <Card icon={<Library />} title="Interactive Chess Study Mode" description="Create and manage studies for openings, endgames, and key positions with a simple, intuitive interface for seamless improvement." />
+                                        <Card icon={<Lightbulb />} title="Position Evaluation and Insights" description="Analyze positions with advanced engines, uncovering optimal moves, strategies, and tactical opportunities for better decision-making." />
+                                </div>
+                                <div className="row flex xs:flex-col md:flex-row justify-between gap-10">
+                                        <Card icon={<BicepsFlexed />} title="Quiz Based Learning" description="Test your knowledge with interactive quizzes based on your studies to reinforce learning and sharpen your chess skills." />
+                                        <Card icon={<Blocks />} title="Seamless Integration" description="Effortlessly integrate with Lichess and Chess.com to import games without manual effort." />
+                                </div>
+
+                        </div>
+
+                </div>
+        )
+}
+
+interface CardProps {
+        icon: JSX.Element,
+        title: string,
+        description: string
+}
+
+export function Card({ icon, title, description }: CardProps) {
+        return (
+                <div className="card flex xs:flex-col md:flex-row gap-3 flex-[1] items-start">
+                        <div className="bg-primary rounded-md p-3 text-background">
+                                {icon}
+                        </div>
+                        <div className="text-content flex flex-col gap-1">
+                                <h3 className="font-bold text-lg">{title}</h3>
+                                <p className="text-muted-foreground">{description}</p>
+                        </div>
+                </div>
+
+        )
+}
