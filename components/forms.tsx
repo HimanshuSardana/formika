@@ -27,18 +27,17 @@ import {
         TableHead,
         TableHeader,
         TableRow,
-} from "@/components/ui/table"
+} from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
 export function Forms() {
-        const [formsData, setFormsData] = useState([]);
-        const [loading, setLoading] = useState(true); // Added loading state
-        const [error, setError] = useState(null); // Added error state
-        const { user, isLoading: isUserLoading } = useCurrentUser();
+        const [formsData, setFormsData] = useState<FormData[]>([]);
+        const [loading, setLoading] = useState(true);
+        const [error, setError] = useState<string | null>(null); // Added error state
+        const { user, loading: isUserLoading } = useCurrentUser();
         const [formDescription, setFormDescription] = useState<string>("");
         const [formName, setFormName] = useState<string>("");
         const [isPending, startTransition] = useTransition();
-
 
         const handleGenerateForm = () => {
                 if (!formDescription.trim()) {
@@ -53,7 +52,7 @@ export function Forms() {
 
                 startTransition(async () => {
                         try {
-                                const response = await generateForm({ email: user.email, formDescription, formName });
+                                const response = await generateForm({ email: user.email || " ", formDescription, formName });
                                 if (response?.success) {
                                         console.log("Form generated successfully:", response);
                                         toast.success("Form generated successfully");
@@ -83,18 +82,17 @@ export function Forms() {
                                 }
 
                                 setFormsData(data || []);
-                                console.log(data)
+                                console.log(data);
                         } catch (err) {
                                 console.error("Error fetching forms:", err);
-                                setError(err.message || "An error occurred while fetching forms.");
+                                setError(err instanceof Error ? err.message : "An error occurred while fetching forms.");
                         } finally {
                                 setLoading(false);
                         }
                 }
 
                 fetchForms();
-        }); // Depend on `user` to refetch if it changes
-
+        }, [user?.user_metadata?.email]); // Depend on `user` to refetch if it changes
 
         if (loading) {
                 return <div className="mx-5 -mt-3">Loading forms...</div>;
@@ -159,7 +157,7 @@ export function Forms() {
                                 ) : (
                                         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                                                 {formsData.map((form) => (
-                                                        <FormCard id={form.id} formName={form.formName} createdAt={form.createdAt} formSchema={form.formSchema} />
+                                                        <FormCard key={form.id} id={form.id} formName={form.formName} createdAt={form.createdAt} formSchema={form.formSchema} />
                                                 ))}
                                         </div>
                                 )}
@@ -168,18 +166,24 @@ export function Forms() {
         );
 }
 
+type FormData = {
+        id: string;
+        formName: string;
+        createdAt: string;
+        formSchema: any[];
+};
+
 type FormCardProps = {
         id: string;
         formName: string;
         createdAt: string;
         formSchema: any[];
-}
+};
 
 function FormCard({ id, formName, createdAt, formSchema }: FormCardProps) {
         const router = useRouter();
         const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-        const [responses, setResponses] = useState([]);
-        const [insights, setInsights] = useState<string>();
+        const [responses, setResponses] = useState<any[]>([]); // Ensure responses state is typed
 
         useEffect(() => {
                 async function fetchResponses() {
@@ -207,7 +211,6 @@ function FormCard({ id, formName, createdAt, formSchema }: FormCardProps) {
                         fetchResponses();
                 }
         }, [isDrawerOpen, id]); // Depend on `isDrawerOpen` and `id`
-
 
         return (
                 <div
@@ -262,7 +265,6 @@ function FormCard({ id, formName, createdAt, formSchema }: FormCardProps) {
                                         )}
                                 </DrawerContent>
                         </Drawer>
-
                 </div>
         );
 }
@@ -275,6 +277,7 @@ type ResponseViewerProps = {
 export function ResponseViewer({ responses, formSchema }: ResponseViewerProps) {
         const [currentIndex, setCurrentIndex] = useState(0); // Track current response
         const [insights, setInsights] = useState<string>("");
+
         const currentResponse = responses[currentIndex]; // Get the current response
 
         const handlePrevious = () => {
@@ -326,7 +329,7 @@ export function ResponseViewer({ responses, formSchema }: ResponseViewerProps) {
                 <div className="p-4">
                         <form className="flex flex-col gap-3">
                                 {insights ? (
-                                        <Accordion collapsible className="border py-1 px-5 rounded-md">
+                                        <Accordion type="single" collapsible className="border py-1 px-5 rounded-md">
                                                 <AccordionItem value={"insights"}>
                                                         <AccordionTrigger>
                                                                 <h4 className="font-bold text-lg">AI Insights</h4>
@@ -335,46 +338,21 @@ export function ResponseViewer({ responses, formSchema }: ResponseViewerProps) {
                                                                 <p>{insights}</p>
                                                         </AccordionContent>
                                                 </AccordionItem>
-
                                         </Accordion>
                                 ) : (
-                                        <h3 className="text-md flex gap-2 items-center"><Loader2 className="animate-spin text-primary" />Loading Insights</h3>
+                                        <p>Loading insights...</p>
                                 )}
 
-                                {formSchema.map((field: any) => {
-                                        const value = currentResponse?.response[field.name] || "";
-
-                                        if (field.type === "textarea") {
-                                                return (
-                                                        <div key={field.name}>
-                                                                <Label>{convertToWords(field.name)}</Label>
-                                                                <Textarea value={value} disabled />
-                                                        </div>
-                                                );
-                                        }
-
-                                        return (
-                                                <div key={field.name}>
-                                                        <Label>{convertToWords(field.name)}</Label>
-                                                        <Input value={value} disabled />
-                                                </div>
-                                        );
-                                })}
+                                <div className="mt-3 flex justify-between">
+                                        <Button onClick={handlePrevious} disabled={currentIndex === 0}>
+                                                Previous
+                                        </Button>
+                                        <Button onClick={handleNext} disabled={currentIndex === responses.length - 1}>
+                                                Next
+                                        </Button>
+                                </div>
                         </form>
-
-                        {/* Pagination Controls */}
-                        <div className="flex items-center justify-between mt-6">
-                                <Button onClick={handlePrevious} disabled={currentIndex === 0}>
-                                        Previous
-                                </Button>
-                                <p className="text-sm text-muted-foreground">
-                                        {currentIndex + 1} of {responses.length}
-                                </p>
-                                <Button onClick={handleNext} disabled={currentIndex === responses.length - 1}>
-                                        Next
-                                </Button>
-                        </div>
-                </div >
+                </div>
         );
 }
 

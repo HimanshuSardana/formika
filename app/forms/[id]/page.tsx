@@ -10,15 +10,34 @@ import { FloatingLabelInput } from "@/components/floating-label-input";
 import { FloatingLabelTextarea } from "@/components/floating-label-textarea";
 import { FloatingLabelSelect } from "@/components/floating-label-select";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { Label } from "@/components/ui/label";
 import submitResponse from "@/actions/submit_response";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { SliderMarks } from "@/components/slider-marks";
 
-const FormPreviewPage = ({ params }) => {
+interface FormField {
+        name: string;
+        type: string;
+        values?: {
+                items: { value: string; label: string }[];
+        };
+}
+
+interface FormData {
+        id: string;
+        formName: string;
+        formSchema: FormField[];
+}
+
+interface FormPreviewPageProps {
+        params: { id: string };
+}
+
+const FormPreviewPage: React.FC<FormPreviewPageProps> = ({ params }) => {
         const id = params.id;
-        const [formData, setFormData] = useState(null);
-        const [formName, setFormName] = useState("");
-        const [formSchema, setFormSchema] = useState(null);
+        const [formData, setFormData] = useState<FormData | null>(null);
+        const [formName, setFormName] = useState<string>("");
+        const [formSchema, setFormSchema] = useState<FormField[] | null>(null);
 
         useEffect(() => {
                 async function getFormSchema() {
@@ -37,7 +56,7 @@ const FormPreviewPage = ({ params }) => {
                 getFormSchema();
         }, [params.id]);
 
-        async function handleSubmit(event) {
+        const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
                 event.preventDefault();
                 const formData = new FormData(event.currentTarget);
                 const formEntries = Object.fromEntries(formData.entries());
@@ -50,11 +69,11 @@ const FormPreviewPage = ({ params }) => {
                 }
 
                 console.log("Submitted form data:", response);
-        }
+        };
 
-        function convertToWords(input) {
+        const convertToWords = (input: string): string => {
                 return input.replace(/([a-z])([A-Z])/g, "$1 $2").replace(/_/g, " ");
-        }
+        };
 
         return (
                 <div className="mx-10 my-5 flex flex-col gap-5">
@@ -87,7 +106,6 @@ const FormPreviewPage = ({ params }) => {
                                                                 {field.type === "select" && field.values?.items && (
                                                                         <FloatingLabelSelect
                                                                                 label={convertToWords(field.name)}
-                                                                                id={field.name}
                                                                                 name={field.name}
                                                                                 options={field.values.items.map((item) => ({
                                                                                         value: item.value,
@@ -116,7 +134,10 @@ const FormPreviewPage = ({ params }) => {
                                                                         />
                                                                 )}
                                                                 {field.type === "range" && field.values?.items && (
-                                                                        <SliderMarks name={field.name} stepValues={field.values.items.map((item) => item.value)} />
+                                                                        <>
+                                                                                <Label className="my-2" htmlFor={field.name}>{convertToWords(field.name)}</Label>
+                                                                                <SliderMarks name={field.name} stepValues={field.values.items.map((item) => parseInt(item.value.toString()))} />
+                                                                        </>
                                                                 )}
                                                         </div>
                                                 ))}
@@ -124,13 +145,12 @@ const FormPreviewPage = ({ params }) => {
                                         </form>
                                 </div>
                         )}
-                        {id}
                 </div>
         );
 };
 
-const BackBar = () => (
-        <Button asChild variant="secondary">
+const BackBar: React.FC = () => (
+        <Button asChild className="bg-inherit" variant="secondary">
                 <Link href="/dashboard">
                         <ChevronLeft /> Back
                 </Link>
@@ -138,3 +158,4 @@ const BackBar = () => (
 );
 
 export default FormPreviewPage;
+

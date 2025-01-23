@@ -1,15 +1,15 @@
 "use server"
-import { createClient } from "@/utils/supabase/server"
 
 type ResponseData = {
         response: Object
 }
 
-export default async function submitResponse(id, data: ResponseData) {
+import { createClient } from "@/utils/supabase/server"
+export default async function submitResponse(id: string | number, data: ResponseData) {
         const supabase = await createClient()
 
         const { error } = await supabase.from("responses").insert({
-                form_id: parseInt(id),
+                form_id: parseInt(id.toString()),
                 response: data.response
         })
         if (error) {
@@ -19,3 +19,4 @@ export default async function submitResponse(id, data: ResponseData) {
 
         return { success: true, message: "Response submitted successfully" }
 }
+

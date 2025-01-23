@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/lib/utils"
 
 interface FloatingLabelTextareaProps
-        extends React.TextareaHTMLAttributes<HTMLInputElement> {
+        extends React.TextareaHTMLAttributes<HTMLTextAreaElement> {
         label: string
 }
 
@@ -34,7 +34,7 @@ export function FloatingLabelTextarea({
                                 id={id}
                                 className={cn(
                                         "h-14 pt-6 focus-visible:ring-0",
-                                        (isFocused) && "border-primary",
+                                        isFocused && "border-primary", // Fix: No need to wrap in parentheses here
                                         className
                                 )}
                                 {...props}
@@ -56,6 +56,4 @@ export function FloatingLabelTextarea({
                 </div>
         )
 }
-
-
 

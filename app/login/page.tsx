@@ -101,7 +101,7 @@ export default function LoginPage() {
         )
 }
 
-export function BackBar() {
+function BackBar() {
         return (
                 <div className="flex">
                         <Button asChild variant={"secondary"} className="font-bold bg-inherit">

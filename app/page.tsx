@@ -15,7 +15,7 @@ export default function Home() {
         );
 }
 
-export function Navbar() {
+function Navbar() {
         return (
                 <div className=" h-32 flex items-center justify-between mx-[10%]">
                         {/* BRAND */}
@@ -35,7 +35,7 @@ export function Navbar() {
         );
 }
 
-export function Hero() {
+function Hero() {
         return (
                 <div className="h-[calc(90vh-128px)] flex md:flex-row sm:flex-col items-center  mx-[10%] flex gap-5">
                         {/* LEFT */}
@@ -54,13 +54,13 @@ export function Hero() {
         )
 }
 
-export function Chip() {
+function Chip() {
         return (
                 <span className="bg-primary/20  rounded-full text-base text-xs font-bold px-4 text-primary w-fit p-2">Beta version out now!</span>
         )
 }
 
-export function Features() {
+function Features() {
         return (
                 <div className="mx-[10%] flex flex-col py-16">
                         <div className="flex justify-between flex-col gap-2">
@@ -97,7 +97,7 @@ interface CardProps {
         description: string
 }
 
-export function Card({ icon, title, description }: CardProps) {
+function Card({ icon, title, description }: CardProps) {
         return (
                 <div className="card flex xs:flex-col md:flex-row gap-3 flex-[1] items-start">
                         <div className="bg-primary rounded-md p-3 text-background">

@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Forms } from "@/components/forms"
+import { Forms } from "@/components/forms";
 import { useState, useEffect, useRef } from "react";
 import ProtectedRoute from "@/components/auth/protected-route-wrapper";
 import useCurrentUser from "@/hooks/useCurrentUser";
@@ -16,20 +16,19 @@ import { Separator } from "@/components/ui/separator";
 import { ThemeToggleButton } from "@/components/theme-toggle";
 import { Dashboard } from "@/components/dashboard";
 import { usePathname } from "next/navigation";
-import { add_usernames } from "@/actions/add_usernames";
 
+// Typing useTabUnderline hook
 function useTabUnderline(initialTabIndex: number) {
-        const [activeTab, setActiveTab] = useState(initialTabIndex);
-        const [tabUnderlineWidth, setTabUnderlineWidth] = useState(10);
-        const [tabUnderlineLeft, setTabUnderlineLeft] = useState(10);
-        const tabsRef = useRef<(HTMLButtonElement | null)[]>([]);
-
+        const [activeTab, setActiveTab] = useState<number>(initialTabIndex); // Ensure activeTab is typed as a number
+        const [tabUnderlineWidth, setTabUnderlineWidth] = useState<number>(10); // Typing for width
+        const [tabUnderlineLeft, setTabUnderlineLeft] = useState<number>(10); // Typing for left position
+        const tabsRef = useRef<(HTMLButtonElement | null)[]>([]); // Proper typing for ref
 
         useEffect(() => {
                 const setTabPosition = () => {
                         const currentTab = tabsRef.current[activeTab];
-                        setTabUnderlineLeft(currentTab?.offsetLeft ?? tabsRef.current[0]?.offsetLeft);
-                        setTabUnderlineWidth(currentTab?.clientWidth ?? tabsRef.current[0]?.clientWidth);
+                        setTabUnderlineLeft(currentTab?.offsetLeft ?? tabsRef.current[0]?.offsetLeft ?? 0);
+                        setTabUnderlineWidth(currentTab?.clientWidth ?? tabsRef.current[0]?.clientWidth ?? 0);
                 };
 
                 setTabPosition();
@@ -42,14 +41,12 @@ function useTabUnderline(initialTabIndex: number) {
 }
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
-        const { user, loading } = useCurrentUser();
-        const initials = user?.user_metadata?.name?.split(" ").map((name) => name.charAt(0).toUpperCase()).join("");
+        const { user, loading } = useCurrentUser(); // Ensure proper type for 'user' (optional chaining or proper types for user fields)
+        const initials = user?.user_metadata?.name?.split(" ").map((name: string) => name.charAt(0).toUpperCase()).join("") ?? "";
         const path = usePathname();
-        const email = user?.email
+        const email = user?.email ?? "No email"; // Safe fallback
         const breadcrumbs = path.split("/").map((path) => path.charAt(0).toUpperCase() + path.slice(1)).slice(1);
 
-
-        // Use custom hook to manage tab underline
         const { activeTab, setActiveTab, tabUnderlineWidth, tabUnderlineLeft, tabsRef } = useTabUnderline(0);
         const tabs = ["Dashboard", "Forms"];
 
@@ -63,7 +60,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                                         {tabs.map((tab, index) => (
                                                                 <button
                                                                         key={index}
-                                                                        ref={(el) => (tabsRef.current[index] = el)}
+                                                                        ref={(el: HTMLButtonElement | null) => { tabsRef.current[index] = el; }}
                                                                         className={`py-4 px-4 text-center text-sm font-medium transition-colors duration-200 ${activeTab === index ? "text-primary" : "text-muted-foreground hover:text-primary"
                                                                                 }`}
                                                                         onClick={() => setActiveTab(index)}
@@ -95,9 +92,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 }
 
 function Navbar({ initials, email }: { initials: string, email: string }) {
-        async function handleSubmit(e: React.FormEvent) {
+        // Specifying event type for handleSubmit
+        const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
-        }
+        };
+
         return (
                 <div className="px-[3.75rem] pr-[2%] flex flex-row justify-between items-center w-full gap-3 py-6">
                         <div className="flex gap-3 items-center">

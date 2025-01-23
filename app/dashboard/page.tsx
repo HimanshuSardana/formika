@@ -14,24 +14,17 @@ import {
         DialogFooter,
 } from "@/components/ui/dialog";
 import { Plus } from "lucide-react";
-import { createClient } from "@/utils/supabase/client";
 
 export default function Dashboard() {
         const router = useRouter();
         const [formDescription, setFormDescription] = useState<string>("");
 
-
-        const handleGenerateForm = async () => {
+        const handleGenerateForm = async (): Promise<void> => {
                 if (!formDescription.trim()) {
                         console.warn("Form description cannot be empty");
                         return;
                 }
 
-                try {
-                        const response = await generateForm({ formDescription });
-                } catch (err) {
-                        console.error("Error generating form:", err);
-                }
         };
 
         return (
@@ -79,11 +72,12 @@ export default function Dashboard() {
         );
 }
 
-function NewFormCard() {
+const NewFormCard: React.FC = (): JSX.Element => {
         return (
                 <div className="p-5 card rounded-md cursor-pointer flex justify-center text-muted-foreground border border-muted-foreground border-dashed items-center flex-col gap-3">
                         <Plus />
                         <h3 className="font-bold">New Form</h3>
                 </div>
         );
-}
+};
+

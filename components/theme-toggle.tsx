@@ -1,6 +1,5 @@
 import { useTheme } from 'next-themes';
 import { useEffect, useState } from 'react';
-import { SidebarMenuButton } from '@/components/ui/sidebar';
 import { Sun, Moon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
