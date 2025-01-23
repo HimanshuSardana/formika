@@ -140,6 +140,16 @@ const FormPreviewPage: React.FC<FormPreviewPage> = ({ params }) => {
                                                                                 </>
                                                                         )}
 
+                                                                        {field.type === "number" && (
+                                                                                <FloatingLabelInput
+                                                                                        type="number"
+                                                                                        label={convertToWords(field.name)}
+                                                                                        id={field.name}
+                                                                                        name={field.name}
+                                                                                        required
+                                                                                />
+                                                                        )}
+
                                                                 </div>
                                                         ))}
                                                 {/* TODO: Add useTransition */}

@@ -17,11 +17,20 @@ npm run dev
 - [x] Change branding
 - [x] Form creation (using gemini)
 - [x] Actual form creation (saving in db)
+
 **DAY 2**
 - [ ] Make it responsive
+- [ ] Form Editing
 - [-] Add radio buttons and sliders to generated forms ( and type = numbers )
 - [ ] Form results page
 - [ ] Form insights
 - [x] Form preview
+
 **DAY 3**
-- [ ] Landing Page Finishing Touches
+- [ ] Record demo video
+- [ ] Write an engineering report
+- [ ] Fix bugs (if any)
+
+### Known Bugs
+- User gets randomly logged out sometimes on the /forms page (useEffect misfiring)
+- Drawer on view responses page cannot be closed

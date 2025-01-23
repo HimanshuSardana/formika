@@ -9,7 +9,7 @@ import logout from "@/actions/logout";
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from "@/components/ui/tooltip";
 import { Dialog, DialogContent, DialogTitle, DialogTrigger, DialogFooter } from "@/components/ui/dialog";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Plus, Settings, Power, User } from "lucide-react";
+import { Plus, Bell, Power, User } from "lucide-react";
 import { FloatingLabelInput } from "@/components/floating-label-input";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { Separator } from "@/components/ui/separator";
@@ -110,11 +110,11 @@ function Navbar({ initials, email }: { initials: string, email: string }) {
                                                         <Dialog>
                                                                 <DialogTrigger asChild>
                                                                         <Button className="bg-inherit rounded-full" size="icon" variant="secondary">
-                                                                                <Settings size={24} />
+                                                                                <Bell size={24} />
                                                                         </Button>
                                                                 </DialogTrigger>
                                                                 <DialogContent>
-                                                                        <DialogTitle>Settings</DialogTitle>
+                                                                        <DialogTitle>Bell</DialogTitle>
                                                                         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
                                                                                 <h3>Link your Lichess and Chess.com accounts to directly fetch games</h3>
                                                                                 <FloatingLabelInput name="lichess_username" label="Lichess Username" />
@@ -126,7 +126,7 @@ function Navbar({ initials, email }: { initials: string, email: string }) {
                                                                 </DialogContent>
                                                         </Dialog>
                                                 </TooltipTrigger>
-                                                <TooltipContent>Settings</TooltipContent>
+                                                <TooltipContent>Bell</TooltipContent>
                                         </Tooltip>
                                 </TooltipProvider>
                                 <div className="flex items-center gap-3">
