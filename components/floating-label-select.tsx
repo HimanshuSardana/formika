@@ -33,7 +33,7 @@ export function FloatingLabelSelect({
                                         className={cn(
                                                 "h-14 pt-4",
                                                 isFocused && "border-primary",
-                                                hasValue && "pl-[2.125rem]",
+                                                hasValue && "",
                                                 className
                                         )}
                                         onFocus={handleFocus}

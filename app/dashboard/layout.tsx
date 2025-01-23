@@ -104,31 +104,7 @@ function Navbar({ initials, email }: { initials: string, email: string }) {
                                 <h3 className="font-extrabold text-lg">Form<span className="text-primary">ika</span></h3>
                         </div>
                         <div className="flex gap-5">
-                                <TooltipProvider>
-                                        <Tooltip>
-                                                <TooltipTrigger asChild>
-                                                        <Dialog>
-                                                                <DialogTrigger asChild>
-                                                                        <Button className="bg-inherit rounded-full" size="icon" variant="secondary">
-                                                                                <Bell size={24} />
-                                                                        </Button>
-                                                                </DialogTrigger>
-                                                                <DialogContent>
-                                                                        <DialogTitle>Bell</DialogTitle>
-                                                                        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
-                                                                                <h3>Link your Lichess and Chess.com accounts to directly fetch games</h3>
-                                                                                <FloatingLabelInput name="lichess_username" label="Lichess Username" />
-                                                                                <FloatingLabelInput name="chesscom_username" label="Chess.com Username" />
-                                                                        </form>
-                                                                        <DialogFooter>
-                                                                                <Button type="submit" className="font-bold">Save Changes</Button>
-                                                                        </DialogFooter>
-                                                                </DialogContent>
-                                                        </Dialog>
-                                                </TooltipTrigger>
-                                                <TooltipContent>Bell</TooltipContent>
-                                        </Tooltip>
-                                </TooltipProvider>
+                                <ThemeToggleButton />
                                 <div className="flex items-center gap-3">
                                         <DropdownMenu>
                                                 <DropdownMenuTrigger asChild>

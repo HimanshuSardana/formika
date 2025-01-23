@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import LoginSchema from '@/schemas/LoginSchema'
 import Link from "next/link";
 import { ThemeToggleButton } from "@/components/theme-toggle";
-import { Lightbulb, Library, BicepsFlexed, Blocks } from "lucide-react";
+import { Lightbulb, FormInput, BicepsFlexed, Presentation } from "lucide-react";
 
 export default function Home() {
         return (
@@ -23,6 +23,7 @@ export function Navbar() {
 
                         {/* LINKS */}
                         <div className="flex gap-3">
+                                <ThemeToggleButton />
                                 <Button asChild className="font-bold">
                                         <Link href="/register">Get Started</Link>
                                 </Button>
@@ -41,8 +42,8 @@ export function Hero() {
                         <div className="left flex md:items-start sm:items-center sm:text-center md:text-left flex-col space-y-3">
                                 <Chip />
 
-                                <h3 className="text-5xl font-extrabold">Improve your <span className="text-primary">chess</span></h3>
-                                <p className="font-bold text-muted-foreground sm:w-full md:w-2/3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Esse quibusdam facere ut ratione cum autem qui sunt laboriosam vel. Dolores?</p>
+                                <h3 className="text-5xl font-extrabold">Smarter <span className="text-primary">forms</span> powered by AI</h3>
+                                <p className="font-bold text-muted-foreground sm:w-full md:w-2/3">Effortlessly design, share, and analyze smarter forms with Formika's AI-powered tools.</p>
 
                                 <div className="buttons flex gap-5">
                                         <Button className="font-bold">Get Started</Button>
@@ -63,8 +64,8 @@ export function Features() {
         return (
                 <div className="mx-[10%] flex flex-col py-16">
                         <div className="flex justify-between flex-col gap-2">
-                                <h3 className="xs:text-left md:text-center font-black text-primary text-lg">Improve faster</h3>
-                                <h3 className="font-black text-5xl xs:text-left md:text-center">A full-fledged chess analysis tool</h3>
+                                <h3 className="xs:text-left md:text-center font-black text-primary text-lg">Why us?</h3>
+                                <h3 className="font-black text-5xl xs:text-left md:text-center">A full-fledged form analysis tool</h3>
                                 <div className="md:w-1/2 md:mx-auto mt-2">
                                         <p className="xs:text-left md:text-center text-muted-foreground ">
                                                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit libero soluta, placeat consequuntur nam neque hic rem omnis. Earum odit ex rerum reprehenderit dolor nulla.
@@ -76,12 +77,12 @@ export function Features() {
                         {/* FEATURE CARDS */}
                         <div className="feature-cards flex flex-col justify-around md:mx-auto md:w-2/3 gap-10 mt-10">
                                 <div className="row flex xs:flex-col md:flex-row justify-between gap-10">
-                                        <Card icon={<Library />} title="Interactive Chess Study Mode" description="Create and manage studies for openings, endgames, and key positions with a simple, intuitive interface for seamless improvement." />
-                                        <Card icon={<Lightbulb />} title="Position Evaluation and Insights" description="Analyze positions with advanced engines, uncovering optimal moves, strategies, and tactical opportunities for better decision-making." />
+                                        <Card icon={<FormInput />} title="AI Powered Form Generation" description="Describe your needs, and let Formika’s AI create tailored forms in seconds—powered by Gemini." />
+                                        <Card icon={<Presentation />} title="Real-time Form Previews" description="Visualize your forms instantly with our seamless preview feature, ensuring they look perfect before sharing." />
                                 </div>
                                 <div className="row flex xs:flex-col md:flex-row justify-between gap-10">
-                                        <Card icon={<BicepsFlexed />} title="Quiz Based Learning" description="Test your knowledge with interactive quizzes based on your studies to reinforce learning and sharpen your chess skills." />
-                                        <Card icon={<Blocks />} title="Seamless Integration" description="Effortlessly integrate with Lichess and Chess.com to import games without manual effort." />
+                                        <Card icon={<BicepsFlexed />} title="Easy Form Sharing" description="Generate shareable links for your forms, making collaboration and collection a breeze." />
+                                        <Card icon={<Lightbulb />} title="AI Driven Insights" description="Unlock the power of your data with actionable insights derived from responses, powered by advanced AI analytics." />
                                 </div>
 
                         </div>

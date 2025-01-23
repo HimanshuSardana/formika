@@ -21,7 +21,6 @@ export default function Dashboard() {
         const [formDescription, setFormDescription] = useState<string>("");
 
 
-        // Handle form generation
         const handleGenerateForm = async () => {
                 if (!formDescription.trim()) {
                         console.warn("Form description cannot be empty");
@@ -38,7 +37,7 @@ export default function Dashboard() {
         return (
                 <div className="content mx-5 -mt-5">
                         <div className="flex justify-between gap-3 mt-3 w-full">
-                                <h3 className="font-extrabold text-3xl">Recently Created Forms</h3>
+                                <h3 className="font-extrabold text-3xl">Recent activity</h3>
 
                                 {/* ADD Form Dialog */}
                                 <Dialog>
@@ -73,17 +72,13 @@ export default function Dashboard() {
                                 </Dialog>
                         </div>
 
-                        {/* Cards for New Forms */}
                         <div className="flex gap-3 mt-5">
-                                <NewFormCard />
-                                <NewFormCard />
-                                <NewFormCard />
+
                         </div>
                 </div>
         );
 }
 
-// Reusable NewFormCard Component
 function NewFormCard() {
         return (
                 <div className="p-5 card rounded-md cursor-pointer flex justify-center text-muted-foreground border border-muted-foreground border-dashed items-center flex-col gap-3">

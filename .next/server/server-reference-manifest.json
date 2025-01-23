@@ -39,8 +39,16 @@
       "layer": {
         "app/forms/[id]/page": "action-browser"
       }
+    },
+    "08a6bf67626e0a400a9e324f7dd1646b94595566": {
+      "workers": {
+        "app/(auth)/register/page": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22%2Fhome%2Fhimanshu%2Fprojects%2Fformika%2Factions%2Fregister.ts%22%2C%5B%22default%22%5D%5D%5D&__client_imported__=true!"
+      },
+      "layer": {
+        "app/(auth)/register/page": "action-browser"
+      }
     }
   },
   "edge": {},
-  "encryptionKey": "TbBJf0mLfzq4MdR3Vgqfs4OC22ejiDeD6u4SsDikAZU="
+  "encryptionKey": "8XJk0B3+l/LyCO7qeekgUcYylgLZ8pw8Q8mGGKzKTAM="
 }

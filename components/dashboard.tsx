@@ -25,28 +25,12 @@ export function Dashboard() {
         return (
                 <div className="content mx-5 -mt-5">
                         <div className="flex justify-between gap-3 mt-3 w-full">
-                                <h3 className="font-extrabold text-3xl">Recently Created Forms</h3>
-
-                                {/* ADD Form Dialog */}
+                                <h3 className="font-extrabold text-3xl">Recent Activity</h3>
                         </div>
 
-                        {/* Cards for New Forms */}
                         <div className="flex gap-3 mt-5">
-                                <NewFormCard />
-                                <NewFormCard />
-                                <NewFormCard />
+
                         </div>
                 </div>
         );
 }
-
-// Reusable NewFormCard Component
-function NewFormCard() {
-        return (
-                <div className="p-5 card rounded-md cursor-pointer flex justify-center text-muted-foreground border border-muted-foreground border-dashed items-center flex-col gap-3">
-                        <Plus />
-                        <h3 className="font-bold">New Form</h3>
-                </div>
-        );
-}
-

@@ -2,5 +2,6 @@
   "/page": "app/page.js",
   "/login/page": "app/login/page.js",
   "/forms/[id]/page": "app/forms/[id]/page.js",
+  "/(auth)/register/page": "app/(auth)/register/page.js",
   "/dashboard/page": "app/dashboard/page.js"
 }

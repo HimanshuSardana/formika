@@ -21,11 +21,11 @@ const schema = {
                         type: {
                                 type: SchemaType.STRING,
                                 description: "Type of the form field (e.g., text, radio, select)",
-                                enum: ["text", "textarea", "radio", "select", "checkbox", "number", "email"], // Allowed field types
+                                enum: ["text", "textarea", "radio", "select", "checkbox", "number", "email", "range"],
                         },
                         values: {
                                 type: SchemaType.OBJECT,
-                                description: 'Only if the field type is "select" or "radio"',
+                                description: 'Only if the field type is "select", "radio", or "range"',
                                 nullable: true,
                                 properties: {
                                         items: {
@@ -40,16 +40,16 @@ const schema = {
                                                                 },
                                                                 label: {
                                                                         type: SchemaType.STRING,
-                                                                        description: "The display label for the option should be in title case, in case of multiple words add spaces between the words",
+                                                                        description: "The display label for the option",
                                                                 },
                                                         },
-                                                        required: ["value", "label"], // Ensure both value and label are provided
+                                                        required: ["value", "label"],
                                                 },
                                         },
                                 },
                         },
                 },
-                required: ["name", "type"], // Ensure name and type are always present
+                required: ["name", "type"],
         },
 };
 
@@ -95,9 +95,9 @@ export default async function generateForm({ email, formDescription, formName }:
                         throw new Error(`Error inserting form into database: ${error.message}`);
                 }
 
-                return { success: true }
+                return { success: true };
         } catch (err) {
                 console.error("Error generating form:", err);
+                throw new Error("Failed to generate form.");
         }
 }
-
