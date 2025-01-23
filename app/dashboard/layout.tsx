@@ -17,7 +17,6 @@ import { ThemeToggleButton } from "@/components/theme-toggle";
 import { Dashboard } from "@/components/dashboard";
 import { usePathname } from "next/navigation";
 
-// Typing useTabUnderline hook
 function useTabUnderline(initialTabIndex: number) {
         const [activeTab, setActiveTab] = useState<number>(initialTabIndex); // Ensure activeTab is typed as a number
         const [tabUnderlineWidth, setTabUnderlineWidth] = useState<number>(10); // Typing for width
@@ -82,8 +81,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                                                 />
                                         </div>
                                         <div className="mt-4 p-4 bg-inherit rounded-lg">
-                                                {tabs[activeTab] === "Dashboard" && <Dashboard />}
-                                                {tabs[activeTab] === "Forms" && <Forms />}
+                                                {/* Using the key to force re-mounting on tab switch */}
+                                                <div key={tabs[activeTab]}>
+                                                        {tabs[activeTab] === "Dashboard" && <Dashboard />}
+                                                        {tabs[activeTab] === "Forms" && <Forms />}
+                                                </div>
                                         </div>
                                 </div>
                         </main>
@@ -92,7 +94,6 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
 }
 
 function Navbar({ initials, email }: { initials: string, email: string }) {
-        // Specifying event type for handleSubmit
         const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
                 e.preventDefault();
         };

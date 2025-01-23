@@ -30,6 +30,7 @@ import {
 } from "@/components/ui/table";
 import { useRouter } from "next/navigation";
 
+
 export function Forms() {
         const [formsData, setFormsData] = useState<FormData[]>([]);
         const [loading, setLoading] = useState(true);
@@ -38,6 +39,36 @@ export function Forms() {
         const [formDescription, setFormDescription] = useState<string>("");
         const [formName, setFormName] = useState<string>("");
         const [isPending, startTransition] = useTransition();
+
+        // Move fetching forms logic into a useEffect so it runs properly on mount
+        useEffect(() => {
+                async function fetchForms() {
+                        if (isUserLoading) return; // Wait for user data
+
+                        try {
+                                const supabase = await createClient();
+
+                                const { data, error } = await supabase
+                                        .from("forms")
+                                        .select("*")
+                                        .eq("created_by_email", user?.user_metadata?.email);
+
+                                if (error) {
+                                        throw error;
+                                }
+
+                                setFormsData(data || []);
+                                console.log(data);
+                        } catch (err) {
+                                console.error("Error fetching forms:", err);
+                                setError(err instanceof Error ? err.message : "An error occurred while fetching forms.");
+                        } finally {
+                                setLoading(false);
+                        }
+                }
+
+                fetchForms();
+        }, [isUserLoading, user?.user_metadata?.email]); // Dependency on isUserLoading or user
 
         const handleGenerateForm = () => {
                 if (!formDescription.trim()) {
@@ -66,33 +97,6 @@ export function Forms() {
         if (isUserLoading) {
                 return <div>Loading...</div>; // Replace with a proper loading state if needed
         }
-
-        useEffect(() => {
-                async function fetchForms() {
-                        try {
-                                const supabase = await createClient();
-
-                                const { data, error } = await supabase
-                                        .from("forms")
-                                        .select("*")
-                                        .eq("created_by_email", user?.user_metadata?.email);
-
-                                if (error) {
-                                        throw error;
-                                }
-
-                                setFormsData(data || []);
-                                console.log(data);
-                        } catch (err) {
-                                console.error("Error fetching forms:", err);
-                                setError(err instanceof Error ? err.message : "An error occurred while fetching forms.");
-                        } finally {
-                                setLoading(false);
-                        }
-                }
-
-                fetchForms();
-        }, [user?.user_metadata?.email]); // Depend on `user` to refetch if it changes
 
         if (loading) {
                 return <div className="mx-5 -mt-3">Loading forms...</div>;
