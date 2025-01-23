@@ -347,6 +347,26 @@ export function ResponseViewer({ responses, formSchema }: ResponseViewerProps) {
                                         <p>Loading insights...</p>
                                 )}
 
+                                {formSchema.map((field: any) => {
+                                        const value = currentResponse?.response[field.name] || "";
+
+                                        if (field.type === "textarea") {
+                                                return (
+                                                        <div key={field.name}>
+                                                                <Label>{convertToWords(field.name)}</Label>
+                                                                <Textarea value={value} disabled />
+                                                        </div>
+                                                );
+                                        }
+
+                                        return (
+                                                <div key={field.name}>
+                                                        <Label>{convertToWords(field.name)}</Label>
+                                                        <Input value={value} disabled />
+                                                </div>
+                                        );
+                                })}
+
                                 <div className="mt-3 flex justify-between">
                                         <Button onClick={handlePrevious} disabled={currentIndex === 0}>
                                                 Previous
